@@ -1,0 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Original styles */
+.ffloor {
+    background-color: rgb(245, 245, 245);
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+#logo {
+    height: 100%;
+    width: auto;
+    margin-right: 20px;
+}
+
+.ffloor h4 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.sfloor, .tfloor {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.strangers, .we {
+    background-color: black;
+    width: 70vh;
+    height: 49vh;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+video {
+    width: 100%;
+    height: auto;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.content, .box {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    margin: 10px 0;
+}
+
+#button {
+    border: 1px solid black;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 20px;
+    padding: 10px 20px;
+    background-color: rgb(255, 49, 49);
+    color: white;
+}
+
+h6 {
+    margin: 10px 0;
+    font-size: 1.2em;
+}
+
+#last {
+    color: #1b1b62;
+    background-color: #479d9d;
+    font-size: 1.5em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.textt {
+    border: 1px solid green;
+    border-radius: 7px;
+    width: 100%;
+    /* max-width: 600px; */
+    text-align: center;
+    margin: 10px 0;
+    height: 30px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .ffloor {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+    }
+
+    #logo {
+        margin-bottom: 10px;
+    }
+
+    .ffloor h4 {
+        font-size: 1.2em;
+    }
+
+    .strangers, .we {
+        width: 80%;
+        height: auto;
+    }
+
+    .sfloor, .tfloor {
+        flex-direction: column;
+    }
+
+    .content, .box {
+        width: 90%;
+    }
+
+    #button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .ffloor h4, h6, #last {
+        font-size: 1em;
+    }
+
+    #button {
+        padding: 8px 15px;
+    }
+}
