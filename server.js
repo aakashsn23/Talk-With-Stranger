@@ -1,5 +1,3 @@
-// server.js
-
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
@@ -8,34 +6,40 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
-// Serve static files from the public directory
 app.use(express.static('public'));
 
-let waitingPeer = null;
+// Serve the index.html file
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
 
+// Handle socket connection
 io.on('connection', (socket) => {
-    console.log('New user connected:', socket.id);
+    console.log('A user connected:', socket.id);
 
-    if (waitingPeer) {
-        // Pair the new user with the waiting peer
-        io.to(socket.id).emit('peer', { peerId: waitingPeer });
-        io.to(waitingPeer).emit('peer', { peerId: socket.id });
-        waitingPeer = null;
-    } else {
-        // Set the new user as the waiting peer
-        waitingPeer = socket.id;
-    }
-
+    // Broadcast a message when a user disconnects
     socket.on('disconnect', () => {
-        console.log('User disconnected:', socket.id);
-        if (waitingPeer === socket.id) {
-            waitingPeer = null;
-        }
+        console.log('A user disconnected:', socket.id);
+        socket.broadcast.emit('user-disconnected', socket.id);
+    });
+
+    // Relay offer and answer between peers
+    socket.on('offer', (data) => {
+        socket.broadcast.emit('offer', data);
+    });
+
+    socket.on('answer', (data) => {
+        socket.broadcast.emit('answer', data);
+    });
+
+    // Relay ICE candidates between peers
+    socket.on('ice-candidate', (data) => {
+        socket.broadcast.emit('ice-candidate', data);
     });
 });
 
-server.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
